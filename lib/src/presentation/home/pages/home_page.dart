@@ -71,6 +71,7 @@ class _HomePageState extends State<HomePage> {
                       ItensCharactersGridWidget(
                         items: items,
                         scrollController: _controller.scrollController,
+                        loadMore: _controller.loadMoreItens,
                       ),
                       LoadingMoreItemsWidget(
                         valueListenable: _controller.loadingMore,

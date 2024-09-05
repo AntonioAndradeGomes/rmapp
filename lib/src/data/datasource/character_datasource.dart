@@ -1,14 +1,17 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:rmapp/src/common/constants/urls.dart';
+import 'package:rmapp/src/common/models/info_model.dart';
 import 'package:rmapp/src/data/models/character_return_model.dart';
+import 'package:rmapp/src/data/models/episode_model.dart';
 
 abstract interface class CharacterDatasource {
   Future<CharacterReturnModel> getCharacters(
     int page,
     String search,
   );
+
+  Future<List<EpisodeModel>> getEpisodeFromUrls(List<String> urls);
 }
 
 class CharacterDatasourceImpl implements CharacterDatasource {
@@ -25,12 +28,14 @@ class CharacterDatasourceImpl implements CharacterDatasource {
   ) async {
     try {
       const url = "${Urls.baseUrl}/character";
+      final query = {
+        'page': page,
+        if (search.isNotEmpty) 'name': search,
+      };
+
       final response = await _dio.get(
         url,
-        queryParameters: {
-          'page': page,
-          if (search.isNotEmpty) 'name': search,
-        },
+        queryParameters: query,
       );
       if (response.statusCode == 200) {
         return CharacterReturnModel.fromJson(
@@ -40,6 +45,19 @@ class CharacterDatasourceImpl implements CharacterDatasource {
       }
     } on DioException catch (e, s) {
       if (e.response != null) {
+        if (e.response!.data is Map<String, dynamic> &&
+            e.response!.data['error'] == "There is nothing here") {
+          log('Dio error: 404 -> Nothing here - Search returns empty');
+          return const CharacterReturnModel(
+            info: InfoModel(
+              count: 0,
+              pages: 1,
+              next: null,
+              prev: null,
+            ),
+            results: [],
+          );
+        }
         log(
           'Dio error: ${e.response?.statusCode} ${e.response?.statusMessage}',
           error: e,
@@ -66,6 +84,38 @@ class CharacterDatasourceImpl implements CharacterDatasource {
       throw Exception(
         'Failed to send request: ${e.toString()}',
       );
+    }
+  }
+
+  @override
+  Future<List<EpisodeModel>> getEpisodeFromUrls(List<String> urls) async {
+    try {
+      final responses = await Future.wait(
+        urls.map(
+          (url) => _dio.get(url),
+        ),
+      );
+      final episodes = responses.map((response) {
+        return EpisodeModel.fromJson(response.data as Map<String, dynamic>);
+      }).toList();
+
+      return episodes;
+    } on DioException catch (e, s) {
+      // Tratamento de erro específico para requisições com Dio
+      log(
+        'Dio error: ${e.message}',
+        error: e,
+        stackTrace: s,
+      );
+      throw Exception('Failed to fetch episodes: ${e.message}');
+    } catch (e, s) {
+      // Tratamento de erro genérico
+      log(
+        'Error: $e',
+        error: e,
+        stackTrace: s,
+      );
+      throw Exception('Failed to fetch episodes');
     }
   }
 }

@@ -44,45 +44,45 @@ class CharactersController extends ValueNotifier<CharactersState> {
 
   void _onScroll() {
     if (scrollController.position.pixels >=
-            scrollController.position.maxScrollExtent &&
-        !loadingMore.value) {
-      if (_haveItens) {
-        _loadMoreItens();
-      }
+        scrollController.position.maxScrollExtent) {
+      loadMoreItens();
     }
   }
 
-  Future<void> _loadMoreItens() async {
-    loadingMore.value = true;
-    //validar se há próxima página
-    final state = value.characterReturnEntity!;
-    if (state.info.next == null) {
-      loadingMore.value = false;
-      _haveItens = false;
-      return;
-    }
-    //buscar a próxima página
-    final result = await _getApiCharacteresUsecase.call(
-      CaracterSearchInput(
-        page: _page,
-        search: search,
-      ),
-    );
-    result.fold(
-      (success) {
-        final entity = CharacterReturnEntity(
-          info: success.info,
-          results: state.results + success.results,
-        );
-        value = SuccessCharactersState(entity);
+  Future<void> loadMoreItens() async {
+    if (!loadingMore.value && _haveItens) {
+      loadingMore.value = true;
+      //validar se há próxima página
+      final state = value.characterReturnEntity!;
+      if (state.info.next == null) {
         loadingMore.value = false;
-        _haveItens = true;
-        _page++;
-      },
-      (error) {
-        value = ErrorCharactersState(error);
-      },
-    );
+        _haveItens = false;
+        return;
+      }
+      //buscar a próxima página
+      final result = await _getApiCharacteresUsecase.call(
+        CaracterSearchInput(
+          page: _page,
+          search: search,
+        ),
+      );
+
+      result.fold(
+        (success) {
+          final entity = CharacterReturnEntity(
+            info: success.info,
+            results: state.results + success.results,
+          );
+          value = SuccessCharactersState(entity);
+          loadingMore.value = false;
+          _haveItens = true;
+          _page++;
+        },
+        (error) {
+          value = ErrorCharactersState(error);
+        },
+      );
+    }
   }
 
   Future<void> onFilter(String value) async {
