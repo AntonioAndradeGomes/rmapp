@@ -18,7 +18,7 @@ sealed class EpisodesState extends Equatable {
       ];
 }
 
-class LoadinEpisodesState extends EpisodesState {}
+class LoadingEpisodesState extends EpisodesState {}
 
 class SuccessEpisodesState extends EpisodesState {
   const SuccessEpisodesState(
@@ -29,8 +29,9 @@ class SuccessEpisodesState extends EpisodesState {
 }
 
 class ErrorEpisodesState extends EpisodesState {
-  const ErrorEpisodesState(CustomException customException)
-      : super(
+  const ErrorEpisodesState(
+    CustomException customException,
+  ) : super(
           exception: customException,
         );
 }

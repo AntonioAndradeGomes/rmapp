@@ -45,7 +45,7 @@ class _ItensCharactersGridWidgetState extends State<ItensCharactersGridWidget> {
           controller: widget.scrollController,
           itemCount: widget.items.length,
           // shrinkWrap: true,
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(15),
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 180, //tamanho máximo dos itens
             mainAxisExtent: 180,

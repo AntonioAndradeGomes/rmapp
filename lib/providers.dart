@@ -4,8 +4,10 @@ import 'package:rmapp/src/data/datasource/character_datasource.dart';
 import 'package:rmapp/src/data/repositories/characters_repository_impl.dart';
 import 'package:rmapp/src/domain/repositories/characters_repository.dart';
 import 'package:rmapp/src/domain/usecases/get_api_characteres_usecase.dart';
+import 'package:rmapp/src/domain/usecases/get_characteres_from_urls_usecase.dart';
 import 'package:rmapp/src/domain/usecases/get_episodes_from_urls_usecase.dart';
 import 'package:rmapp/src/presentation/character_detail/controllers/episodes_controller.dart';
+import 'package:rmapp/src/presentation/episode_detail/controllers/list_characteres_controller.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_controller.dart';
 
 final getIt = GetIt.instance;
@@ -37,6 +39,12 @@ Future<void> initializeDependencies() async {
     ),
   );
 
+  getIt.registerLazySingleton<GetCharacteresFromUrlsUsecase>(
+    () => GetCharacteresFromUrlsUsecase(
+      repository: getIt(),
+    ),
+  );
+
   getIt.registerFactory(
     () => EpisodesController(
       getEpisodesFromUrlsUsecase: getIt(),
@@ -46,6 +54,12 @@ Future<void> initializeDependencies() async {
   getIt.registerFactory(
     () => CharactersController(
       getApiCharacteresUsecase: getIt(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => ListCharacteresController(
+      getCharacteresFromUrlsUsecase: getIt(),
     ),
   );
 }

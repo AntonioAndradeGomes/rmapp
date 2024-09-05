@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:rmapp/providers.dart';
+import 'package:rmapp/src/common/widgets/error_widget.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_controller.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_state.dart';
 import 'package:rmapp/src/presentation/home/widgets/itens_characters_grid_widget.dart';
 import 'package:rmapp/src/presentation/home/widgets/loading_more_items_widget.dart';
+import 'package:rmapp/src/presentation/home/widgets/search_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,24 +34,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rick & Morty'),
+        centerTitle: true,
       ),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(10),
-            child: TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Search',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                suffixIcon: const Icon(
-                  Icons.search,
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-              ),
+            child: SearchWidget(
+              hintText: 'Search',
               onChanged: (value) {
                 _controller.onFilter(value);
               },
@@ -77,6 +69,13 @@ class _HomePageState extends State<HomePage> {
                         valueListenable: _controller.loadingMore,
                       ),
                     ],
+                  );
+                }
+                if (state is ErrorCharactersState) {
+                  return ErrorLoadWidget(
+                    message: state.customException!.customMessage!,
+                    messageButton: 'Search again',
+                    onPressed: _controller.loadData,
                   );
                 }
                 return const SizedBox();

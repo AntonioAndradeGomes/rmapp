@@ -7,12 +7,12 @@ class EpisodesController extends ValueNotifier<EpisodesState> {
   EpisodesController({
     required GetEpisodesFromUrlsUsecase getEpisodesFromUrlsUsecase,
   })  : _getEpisodesFromUrlsUsecase = getEpisodesFromUrlsUsecase,
-        super(LoadinEpisodesState());
+        super(LoadingEpisodesState());
 
   Future<void> loadData({
     required List<String> urls,
   }) async {
-    value = LoadinEpisodesState();
+    value = LoadingEpisodesState();
     final result = await _getEpisodesFromUrlsUsecase.call(urls);
     result.fold(
       (success) {

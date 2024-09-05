@@ -1,6 +1,7 @@
 import 'package:result_dart/result_dart.dart';
 import 'package:rmapp/src/common/error/custom_exception.dart';
 import 'package:rmapp/src/data/datasource/character_datasource.dart';
+import 'package:rmapp/src/domain/entities/character_entity.dart';
 import 'package:rmapp/src/domain/entities/character_return_entity.dart';
 import 'package:rmapp/src/domain/entities/episode_entity.dart';
 import 'package:rmapp/src/domain/repositories/characters_repository.dart';
@@ -45,6 +46,24 @@ class CharactersRepositoryImpl implements CharactersRepository {
           messageError: e.toString(),
           customMessage:
               'An unexpected error occurred while fetching the episodes. Please try again.',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Result<List<CharacterEntity>, CustomException>> getCharactersFromUrls(
+    List<String> urls,
+  ) async {
+    try {
+      final characters = await _datasource.getCharactersFromUrl(urls);
+      return Success(characters);
+    } catch (e) {
+      return Failure(
+        CustomException(
+          messageError: e.toString(),
+          customMessage:
+              'An unexpected error occurred while fetching the characteres. Please try again.',
         ),
       );
     }
