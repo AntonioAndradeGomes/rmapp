@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rmapp/src/domain/entities/character_entity.dart';
-import 'package:rmapp/src/presentation/episode_detail/widgets/character_item_widget.dart';
+import 'package:rmapp/src/presentation/widgets/character_item_widget.dart';
 
 class ListCharactersWidget extends StatelessWidget {
   final List<CharacterEntity> items;

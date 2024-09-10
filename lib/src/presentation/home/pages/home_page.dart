@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rmapp/providers.dart';
 import 'package:rmapp/src/common/widgets/error_widget.dart';
+import 'package:rmapp/src/presentation/favorites/pages/favorites_page.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_controller.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_state.dart';
 import 'package:rmapp/src/presentation/home/widgets/itens_characters_grid_widget.dart';
@@ -35,6 +36,20 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Rick & Morty'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const FavoritesPage(),
+                ),
+              );
+            },
+            icon: const Icon(
+              Icons.favorite,
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [

@@ -31,6 +31,16 @@ class _CharacterDetailPageState extends State<CharacterDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _controller.saveData(
+            entity: widget.characterEntity,
+          );
+        },
+        child: const Icon(
+          Icons.save,
+        ),
+      ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(

@@ -40,6 +40,8 @@ dependencies:
   dio: ^5.7.0
   get_it: ^7.7.0
   cached_network_image: ^3.4.1
+  floor: ^1.5.0
+  sqflite: ^2.3.3+1
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +53,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
+  floor_generator:
+  build_runner: 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

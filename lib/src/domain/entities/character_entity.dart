@@ -8,7 +8,7 @@ class CharacterEntity extends Equatable {
   final String type;
   final String gender;
   final String locationName;
-  final List<String> episode;
+  final String episodes;
   final String image;
 
   const CharacterEntity({
@@ -19,9 +19,15 @@ class CharacterEntity extends Equatable {
     required this.type,
     required this.gender,
     required this.locationName,
-    required this.episode,
+    required this.episodes,
     required this.image,
   });
+
+  List<String> get episode => episodes
+      .replaceAll(RegExp(r'[\[\]]'), '') // Remove os colchetes
+      .split(',') // Divide pela vírgula
+      .map((e) => e.trim()) // Remove espaços em branco extras
+      .toList();
 
   @override
   List<Object?> get props => [
@@ -32,7 +38,7 @@ class CharacterEntity extends Equatable {
         type,
         gender,
         locationName,
-        episode,
+        episodes,
         image,
       ];
 }
