@@ -28,8 +28,6 @@ class CharactersRepositoryImpl implements CharactersRepository {
       final characterReturnModel =
           await _datasource.getCharacters(page, search);
       return characterReturnModel.toSuccess();
-    } on CustomException catch (e) {
-      return Failure(e);
     } catch (e) {
       return CustomException(
         messageError: e.toString(),
@@ -82,6 +80,8 @@ class CharactersRepositoryImpl implements CharactersRepository {
           await _characterDao.findCharacterById(entity.id);
       // Verifica se o personagem existe no banco de dados
       if (existingCharacter != null) {
+        log('Existe um character com o id fornecido');
+
         final isExactMath = await _characterDao.findCharacterByFullDetails(
           entity.id,
           entity.name,
@@ -93,20 +93,24 @@ class CharactersRepositoryImpl implements CharactersRepository {
           entity.episodes,
           entity.image,
         );
+
         // Verifica se o personagem é exatamente o mesmo comparando todos os campos
-        if (isExactMath != null) {
+        if (isExactMath == null) {
+          log('O Character existente com o id fornecido não exatamente igual a um existente então atualizarei');
           // Se os dados forem diferentes, atualizar o personagem
           await _characterDao.updateCharacter(
             CharacterModel.fromEntity(entity),
           );
           return NoParams().toSuccess();
         }
+        log(' o personagem já está entre os favoritos com dados iguais');
         // Se o personagem já está entre os favoritos com dados iguais
         return const CustomException(
           customMessage: 'Character is already a favorite',
           code: '1555',
         ).toFailure();
       }
+      log('o personagem não existe no banco');
       // Se o personagem não existir no banco, adicionar
       await _characterDao.insertCharacter(
         CharacterModel.fromEntity(entity),
@@ -114,7 +118,7 @@ class CharactersRepositoryImpl implements CharactersRepository {
       return NoParams().toSuccess();
     } catch (e, s) {
       log(
-        'saveCharactersInLocalStorage eeror: ${e.toString()}',
+        'saveCharactersInLocalStorage error: ${e.toString()}',
         stackTrace: s,
         error: e,
       );
@@ -134,6 +138,21 @@ class CharactersRepositoryImpl implements CharactersRepository {
     } catch (e) {
       return const CustomException(
         customMessage: 'Error fetching favorite characters. Try again!',
+      ).toFailure();
+    }
+  }
+
+  @override
+  Future<Result<int, CustomException>> removeCharacterInLocalStorage(
+      CharacterEntity entity) async {
+    try {
+      await _characterDao.deleteCharacter(
+        CharacterModel.fromEntity(entity),
+      );
+      return entity.id.toSuccess();
+    } catch (e) {
+      return const CustomException(
+        customMessage: 'Unable to remove character. Try again!',
       ).toFailure();
     }
   }

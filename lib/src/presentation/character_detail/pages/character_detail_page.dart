@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:rmapp/providers.dart';
+import 'package:rmapp/src/common/error/custom_exception.dart';
 import 'package:rmapp/src/domain/entities/character_entity.dart';
 import 'package:rmapp/src/presentation/character_detail/controllers/episodes_controller.dart';
 import 'package:rmapp/src/presentation/character_detail/widgets/details_character_widget.dart';
@@ -32,10 +33,30 @@ class _CharacterDetailPageState extends State<CharacterDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _controller.saveData(
-            entity: widget.characterEntity,
-          );
+        shape: const CircleBorder(),
+        elevation: 0,
+        onPressed: () async {
+          try {
+            await _controller.saveData(
+              entity: widget.characterEntity,
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Theme.of(context).primaryColor,
+                content:
+                    const Text('Character added to favorites successfully'),
+              ),
+            );
+          } on CustomException catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red,
+                content: Text(
+                  e.customMessage!,
+                ),
+              ),
+            );
+          }
         },
         child: const Icon(
           Icons.save,

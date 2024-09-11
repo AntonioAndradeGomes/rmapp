@@ -4,14 +4,14 @@ import 'package:rmapp/src/common/usecase/usecase.dart';
 import 'package:rmapp/src/domain/entities/character_entity.dart';
 import 'package:rmapp/src/domain/repositories/characters_repository.dart';
 
-class SaveCharacterUsecase implements Usecase<NoParams, CharacterEntity> {
+class RemoveCharactereFavoriteUsecase implements Usecase<int, CharacterEntity> {
   final CharactersRepository _repository;
 
-  SaveCharacterUsecase({required CharactersRepository repository})
-      : _repository = repository;
-
+  RemoveCharactereFavoriteUsecase({
+    required CharactersRepository repository,
+  }) : _repository = repository;
   @override
-  Future<Result<NoParams, CustomException>> call(CharacterEntity input) {
-    return _repository.saveCharactersInLocalStorage(input);
+  Future<Result<int, CustomException>> call(CharacterEntity input) {
+    return _repository.removeCharacterInLocalStorage(input);
   }
 }

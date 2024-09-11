@@ -31,6 +31,13 @@ class EpisodesController extends ValueNotifier<EpisodesState> {
 
   Future<void> saveData({required CharacterEntity entity}) async {
     final result = await _saveCharacterUsecase.call(entity);
-    print(result);
+    result.fold(
+      (success) {
+        return;
+      },
+      (error) {
+        throw error;
+      },
+    );
   }
 }

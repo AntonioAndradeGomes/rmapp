@@ -9,6 +9,7 @@ import 'package:rmapp/src/domain/usecases/get_api_characteres_usecase.dart';
 import 'package:rmapp/src/domain/usecases/get_characteres_from_urls_usecase.dart';
 import 'package:rmapp/src/domain/usecases/get_episodes_from_urls_usecase.dart';
 import 'package:rmapp/src/domain/usecases/get_favorites_characteres_usecase.dart';
+import 'package:rmapp/src/domain/usecases/remove_charactere_favorite_usecase.dart';
 import 'package:rmapp/src/domain/usecases/save_character_usecase.dart';
 import 'package:rmapp/src/presentation/character_detail/controllers/episodes_controller.dart';
 import 'package:rmapp/src/presentation/episode_detail/controllers/list_characteres_controller.dart';
@@ -68,6 +69,12 @@ Future<void> initializeDependencies() async {
     ),
   );
 
+  getIt.registerLazySingleton<RemoveCharactereFavoriteUsecase>(
+    () => RemoveCharactereFavoriteUsecase(
+      repository: getIt(),
+    ),
+  );
+
   getIt.registerFactory(
     () => EpisodesController(
       getEpisodesFromUrlsUsecase: getIt(),
@@ -88,8 +95,6 @@ Future<void> initializeDependencies() async {
   );
 
   getIt.registerFactory(
-    () => FavoritesController(
-      getFavoritesCharacteresUseCase: getIt(),
-    ),
+    () => FavoritesController(),
   );
 }

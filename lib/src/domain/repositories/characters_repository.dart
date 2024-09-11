@@ -25,4 +25,8 @@ abstract interface class CharactersRepository {
 
   Future<Result<List<CharacterEntity>, CustomException>>
       getCharactersFavorites();
+
+  Future<Result<int, CustomException>> removeCharacterInLocalStorage(
+    CharacterEntity entity,
+  );
 }

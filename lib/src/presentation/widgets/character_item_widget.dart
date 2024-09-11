@@ -4,11 +4,13 @@ import 'package:rmapp/src/domain/entities/character_entity.dart';
 
 class CharacterItemWidget extends StatelessWidget {
   final GestureTapCallback? onTap;
+  final VoidCallback? onPressedRemove;
   final CharacterEntity item;
   const CharacterItemWidget({
     super.key,
     required this.item,
     this.onTap,
+    this.onPressedRemove,
   });
 
   @override
@@ -84,6 +86,14 @@ class CharacterItemWidget extends StatelessWidget {
                   ],
                 ),
               ),
+              if (onPressedRemove != null)
+                IconButton(
+                  color: Colors.red,
+                  onPressed: onPressedRemove,
+                  icon: const Icon(
+                    Icons.remove_circle_outline_rounded,
+                  ),
+                ),
             ],
           ),
         ),

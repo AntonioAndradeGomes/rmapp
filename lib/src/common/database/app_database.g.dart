@@ -200,7 +200,7 @@ class _$CharacterDao extends CharacterDao {
     String image,
   ) async {
     return _queryAdapter.query(
-        'SELECT * FROM characters      WHERE id = ?1        AND name = ?2        AND status = ?3        AND species = ?4        AND type = ?5        AND gender = ?6        AND locationName = ?7        AND episode = ?8        AND image = ?9',
+        'SELECT * FROM characters      WHERE id = ?1        AND name = ?2        AND status = ?3        AND species = ?4        AND type = ?5        AND gender = ?6        AND locationName = ?7        AND episodes = ?8        AND image = ?9',
         mapper: (Map<String, Object?> row) => CharacterModel(id: row['id'] as int, name: row['name'] as String, status: row['status'] as String, species: row['species'] as String, type: row['type'] as String, gender: row['gender'] as String, locationName: row['locationName'] as String, episodes: row['episodes'] as String, image: row['image'] as String),
         arguments: [
           id,

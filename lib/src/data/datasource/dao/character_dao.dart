@@ -22,7 +22,7 @@ abstract class CharacterDao {
       AND type = :type 
       AND gender = :gender 
       AND locationName = :locationName 
-      AND episode = :episodes 
+      AND episodes = :episodes 
       AND image = :image
   ''')
   Future<CharacterModel?> findCharacterByFullDetails(
