@@ -18,7 +18,7 @@ class EpisodesController extends ValueNotifier<EpisodesState> {
     required List<String> urls,
   }) async {
     value = LoadingEpisodesState();
-    final result = await _getEpisodesFromUrlsUsecase.call(urls);
+    final result = await _getEpisodesFromUrlsUsecase(urls);
     result.fold(
       (success) {
         value = SuccessEpisodesState(success);
@@ -30,7 +30,7 @@ class EpisodesController extends ValueNotifier<EpisodesState> {
   }
 
   Future<void> saveData({required CharacterEntity entity}) async {
-    final result = await _saveCharacterUsecase.call(entity);
+    final result = await _saveCharacterUsecase(entity);
     result.fold(
       (success) {
         return;

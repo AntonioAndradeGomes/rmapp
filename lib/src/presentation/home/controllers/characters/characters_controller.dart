@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rmapp/src/domain/entities/caracter_search_input.dart';
+import 'package:rmapp/src/domain/entities/characters_search_input.dart';
 import 'package:rmapp/src/domain/entities/character_return_entity.dart';
 import 'package:rmapp/src/domain/usecases/get_api_characteres_usecase.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_state.dart';
@@ -25,8 +25,8 @@ class CharactersController extends ValueNotifier<CharactersState> {
     _page = 1;
     loadingMore.value = false;
     _haveItens = true;
-    final result = await _getApiCharacteresUsecase.call(
-      CaracterSearchInput(
+    final result = await _getApiCharacteresUsecase(
+      CharactersSearchInput(
         page: _page,
         search: search,
       ),
@@ -60,8 +60,8 @@ class CharactersController extends ValueNotifier<CharactersState> {
         return;
       }
       //buscar a próxima página
-      final result = await _getApiCharacteresUsecase.call(
-        CaracterSearchInput(
+      final result = await _getApiCharacteresUsecase(
+        CharactersSearchInput(
           page: _page,
           search: search,
         ),

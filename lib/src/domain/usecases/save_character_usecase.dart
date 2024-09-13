@@ -7,11 +7,14 @@ import 'package:rmapp/src/domain/repositories/characters_repository.dart';
 class SaveCharacterUsecase implements Usecase<NoParams, CharacterEntity> {
   final CharactersRepository _repository;
 
-  SaveCharacterUsecase({required CharactersRepository repository})
-      : _repository = repository;
+  SaveCharacterUsecase({
+    required CharactersRepository repository,
+  }) : _repository = repository;
 
   @override
-  Future<Result<NoParams, CustomException>> call(CharacterEntity input) {
+  Future<Result<NoParams, CustomException>> call(
+    CharacterEntity input,
+  ) {
     return _repository.saveCharactersInLocalStorage(input);
   }
 }

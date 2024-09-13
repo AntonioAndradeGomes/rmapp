@@ -15,7 +15,7 @@ class ListCharacteresController extends ValueNotifier<ListCharacteresState> {
     required List<String> urls,
   }) async {
     value = LoadingListCharacteresState();
-    final result = await _getCharacteresFromUrlsUsecase.call(urls);
+    final result = await _getCharacteresFromUrlsUsecase(urls);
     result.fold(
       (success) {
         value = SuccessListCharacteresState(success);
