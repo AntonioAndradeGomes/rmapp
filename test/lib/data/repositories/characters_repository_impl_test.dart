@@ -327,6 +327,61 @@ void main() {
               expect(result.getOrNull()!.length, characterListMock.length);
             },
           );
+
+          test(
+            'should return an error when trying to list the characters',
+            () async {
+              when(() => dao.getAll()).thenThrow(Exception('Database error'));
+              final result = await repository.getCharactersFavorites();
+              expect(result.isSuccess(), false);
+              expect(result.isError(), true);
+              expect(
+                result.exceptionOrNull()?.customMessage,
+                'Error fetching favorite characters. Try again!',
+              );
+            },
+          );
+        },
+      );
+
+      group(
+        'tests in removeCharacterInLocalStorage',
+        () {
+          test(
+            'should return the id of the removed character',
+            () async {
+              final characterEntity = characterListMock.first;
+              final model = CharacterModel.fromEntity(characterEntity);
+              when(() => dao.deleteCharacter(model)).thenAnswer(
+                (_) => Future.value(),
+              );
+              final result = await repository
+                  .removeCharacterInLocalStorage(characterEntity);
+
+              expect(result.isSuccess(), true);
+              expect(result.getOrNull(), model.id);
+              verify(() => dao.deleteCharacter(model)).called(1);
+            },
+          );
+
+          test(
+            'should return an error when trying to remove character',
+            () async {
+              final characterEntity = characterListMock.first;
+              final model = CharacterModel.fromEntity(characterEntity);
+              when(() => dao.deleteCharacter(model))
+                  .thenThrow(Exception('Database error'));
+              final result = await repository
+                  .removeCharacterInLocalStorage(characterEntity);
+
+              expect(result.isSuccess(), false);
+              expect(result.isError(), true);
+              expect(
+                result.exceptionOrNull()?.customMessage,
+                'Unable to remove character. Try again!',
+              );
+            },
+          );
         },
       );
     },
