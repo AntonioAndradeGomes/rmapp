@@ -144,7 +144,8 @@ class CharactersRepositoryImpl implements CharactersRepository {
 
   @override
   Future<Result<int, CustomException>> removeCharacterInLocalStorage(
-      CharacterEntity entity) async {
+    CharacterEntity entity,
+  ) async {
     try {
       await _characterDao.deleteCharacter(
         CharacterModel.fromEntity(entity),

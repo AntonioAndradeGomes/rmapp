@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rmapp/providers.dart';
 import 'package:rmapp/src/common/widgets/error_widget.dart';
+import 'package:rmapp/src/dependencies/dependencies_injector.dart';
 import 'package:rmapp/src/domain/entities/episode_entity.dart';
 import 'package:rmapp/src/presentation/episode_detail/controllers/list_characteres_controller.dart';
 import 'package:rmapp/src/presentation/episode_detail/controllers/list_characteres_state.dart';
@@ -19,7 +19,7 @@ class EpisodeDetailPage extends StatefulWidget {
 }
 
 class _EpisodeDetailPageState extends State<EpisodeDetailPage> {
-  final _controller = getIt<ListCharacteresController>();
+  final _controller = injector<ListCharacteresController>();
 
   @override
   void initState() {

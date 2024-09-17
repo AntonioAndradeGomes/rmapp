@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rmapp/providers.dart';
 import 'package:rmapp/src/common/widgets/error_widget.dart';
+import 'package:rmapp/src/dependencies/dependencies_injector.dart';
 import 'package:rmapp/src/presentation/favorites/pages/favorites_page.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_controller.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_state.dart';
@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _controller = getIt<CharactersController>();
+  final _controller = injector<CharactersController>();
 
   @override
   void initState() {

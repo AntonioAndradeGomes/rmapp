@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:rmapp/providers.dart';
 import 'package:rmapp/src/common/error/custom_exception.dart';
+import 'package:rmapp/src/dependencies/dependencies_injector.dart';
 import 'package:rmapp/src/domain/entities/character_entity.dart';
 import 'package:rmapp/src/presentation/character_detail/controllers/episodes_controller.dart';
 import 'package:rmapp/src/presentation/character_detail/widgets/details_character_widget.dart';
@@ -19,7 +19,7 @@ class CharacterDetailPage extends StatefulWidget {
 }
 
 class _CharacterDetailPageState extends State<CharacterDetailPage> {
-  final _controller = getIt<EpisodesController>();
+  final _controller = injector<EpisodesController>();
 
   @override
   void initState() {

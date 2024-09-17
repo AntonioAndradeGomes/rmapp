@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:get_it/get_it.dart';
 import 'package:rmapp/src/common/database/app_database.dart';
 import 'package:rmapp/src/data/datasource/dao/character_dao.dart';
 import 'package:rmapp/src/data/datasource/remote/character_datasource.dart';
 import 'package:rmapp/src/data/repositories/characters_repository_impl.dart';
+import 'package:rmapp/src/dependencies/injector.dart';
 import 'package:rmapp/src/domain/repositories/characters_repository.dart';
 import 'package:rmapp/src/domain/usecases/get_api_characteres_usecase.dart';
 import 'package:rmapp/src/domain/usecases/get_characteres_from_urls_usecase.dart';
@@ -16,83 +16,85 @@ import 'package:rmapp/src/presentation/episode_detail/controllers/list_character
 import 'package:rmapp/src/presentation/favorites/controllers/favorites_controller.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_controller.dart';
 
-final getIt = GetIt.instance;
+final injector = InjectorImp();
 
 Future<void> initializeDependencies() async {
   // Inicialização do banco de dados
   final database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  getIt.registerSingleton<CharacterDao>(database.characterDao);
+  injector.registerSingleton<CharacterDao>(database.characterDao);
 
   // Registros de serviços únicos
-  getIt.registerSingleton(
+  injector.registerSingleton(
     Dio(),
   );
 
   // Lazy singletons para classes relacionadas à API e Repositórios
-  getIt
+  injector
     ..registerLazySingleton<CharacterDatasource>(
       () => CharacterDatasourceImpl(
-        dio: getIt(),
+        dio: injector(),
       ),
     )
     ..registerLazySingleton<CharactersRepository>(
       () => CharactersRepositoryImpl(
-        datasource: getIt(),
-        characterDao: getIt(),
+        datasource: injector(),
+        characterDao: injector(),
       ),
     );
 
   // Casos de uso
-  getIt
+  injector
     ..registerLazySingleton<GetApiCharacteresUsecase>(
       () => GetApiCharacteresUsecase(
-        repository: getIt(),
+        repository: injector(),
       ),
     )
     ..registerLazySingleton<GetEpisodesFromUrlsUsecase>(
       () => GetEpisodesFromUrlsUsecase(
-        repository: getIt(),
+        repository: injector(),
       ),
     )
     ..registerLazySingleton<GetCharacteresFromUrlsUsecase>(
       () => GetCharacteresFromUrlsUsecase(
-        repository: getIt(),
+        repository: injector(),
       ),
     )
     ..registerLazySingleton<SaveCharacterUsecase>(
       () => SaveCharacterUsecase(
-        repository: getIt(),
+        repository: injector(),
       ),
     )
     ..registerLazySingleton<GetFavoritesCharacteresUseCase>(
       () => GetFavoritesCharacteresUseCase(
-        repository: getIt(),
+        repository: injector(),
       ),
     )
     ..registerLazySingleton<RemoveCharacterFavoriteUsecase>(
       () => RemoveCharacterFavoriteUsecase(
-        repository: getIt(),
+        repository: injector(),
       ),
     );
 
-  // Controllers ou blocs, registrando na mesma linha para economizar chamadas ao GetIt
-  getIt
+  // Controllers ou blocs, registrando na mesma linha para economizar chamadas ao injector
+  injector
     ..registerFactory(
       () => EpisodesController(
-        getEpisodesFromUrlsUsecase: getIt(),
-        saveCharacterUseCase: getIt(),
+        getEpisodesFromUrlsUsecase: injector(),
+        saveCharacterUseCase: injector(),
       ),
     )
     ..registerFactory(
       () => CharactersController(
-        getApiCharacteresUsecase: getIt(),
+        getApiCharacteresUsecase: injector(),
       ),
     )
     ..registerFactory(
       () => ListCharacteresController(
-        getCharacteresFromUrlsUsecase: getIt(),
+        getCharacteresFromUrlsUsecase: injector(),
       ),
     )
-    ..registerFactory(() => FavoritesController());
+    ..registerFactory(
+      () => FavoritesController(),
+    );
 }
