@@ -4,9 +4,9 @@ This is a Flutter application about Rick and Morty characters built in order to 
 
 ## Project Images
 <div style="display: inline-block;">
-<img src="./doc/img/home.png" alt="Application main screen, listing all characters." width="150"/>s
-<img src="./doc/img/detail_character.png" alt="Character details with a list of episodes in which he appears." width="150"/>
-<img src="./doc/img/detail_episode.png" alt="Details of an episode, and the list of characters that appear in it" width="150"/>
+<img src="./doc/img/home.png" alt="Application main screen, listing all characters." width="300"/>s
+<img src="./doc/img/detail_character.png" alt="Character details with a list of episodes in which he appears." width="300"/>
+<img src="./doc/img/detail_episode.png" alt="Details of an episode, and the list of characters that appear in it" width="300"/>
 </div>
 
 ## Implemented features - main features to be implemented
