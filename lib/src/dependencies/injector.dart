@@ -12,7 +12,12 @@ abstract class Injector<T extends Object> {
 }
 
 class InjectorImp<T extends Object> implements Injector<T> {
-  final _getIt = GetIt.instance;
+  final GetIt _getIt;
+
+  //construtor utilizado para implementação de testes
+  InjectorImp({
+    GetIt? getIt,
+  }) : _getIt = getIt ?? GetIt.instance;
 
   @override
   void registerFactory<T extends Object>(T Function() instance) {

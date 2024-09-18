@@ -14,4 +14,11 @@ class InfoModel extends InfoEntity {
         next: json['next'],
         prev: json['prev'],
       );
+
+  Map<String, dynamic> toMap() => {
+        'count': count,
+        'pages': pages,
+        'next': next,
+        'prev': prev,
+      };
 }

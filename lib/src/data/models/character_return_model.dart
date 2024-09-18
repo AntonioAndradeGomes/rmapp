@@ -16,4 +16,6 @@ class CharacterReturnModel extends CharacterReturnEntity {
           .toList(),
     );
   }
+
+  //criar um toJson
 }

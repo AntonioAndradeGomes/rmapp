@@ -43,12 +43,10 @@ class CharacterDatasourceImpl implements CharacterDatasource {
         url,
         queryParameters: query,
       );
-      if (response.statusCode == 200) {
-        return CharacterReturnModel.fromJson(
-            response.data as Map<String, dynamic>);
-      } else {
-        throw Exception('Failed to load characters: ${response.statusMessage}');
-      }
+
+      return CharacterReturnModel.fromJson(
+        response.data as Map<String, dynamic>,
+      );
     } on DioException catch (e, s) {
       if (e.response != null) {
         if (e.response!.data is Map<String, dynamic> &&
@@ -76,6 +74,7 @@ class CharacterDatasourceImpl implements CharacterDatasource {
         log(
           'Error sending request: ${e.message}',
           stackTrace: s,
+          error: e,
         );
         throw Exception(
           'Failed to send request: ${e.message}',

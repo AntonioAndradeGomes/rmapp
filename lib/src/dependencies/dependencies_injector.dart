@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:rmapp/src/common/database/app_database.dart';
-import 'package:rmapp/src/data/datasource/dao/character_dao.dart';
-import 'package:rmapp/src/data/datasource/remote/character_datasource.dart';
+import 'package:rmapp/src/data/datasources/dao/character_dao.dart';
+import 'package:rmapp/src/data/datasources/remote/character_datasource.dart';
 import 'package:rmapp/src/data/repositories/characters_repository_impl.dart';
 import 'package:rmapp/src/dependencies/injector.dart';
 import 'package:rmapp/src/domain/repositories/characters_repository.dart';
