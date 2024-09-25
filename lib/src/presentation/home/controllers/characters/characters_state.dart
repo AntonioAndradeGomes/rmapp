@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:rmapp/src/common/error/custom_exception.dart';
-import 'package:rmapp/src/domain/entities/character_return_entity.dart';
+import 'package:rmapp/src/domain/character/entities/character_return_entity.dart';
 
 sealed class CharactersState extends Equatable {
   final CharacterReturnEntity? characterReturnEntity;

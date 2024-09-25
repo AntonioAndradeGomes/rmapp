@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:rmapp/src/common/error/custom_exception.dart';
-import 'package:rmapp/src/domain/entities/character_entity.dart';
+import 'package:rmapp/src/domain/character/entities/character_entity.dart';
 
 sealed class FavoritesState extends Equatable {
   final List<CharacterEntity>? characteres;

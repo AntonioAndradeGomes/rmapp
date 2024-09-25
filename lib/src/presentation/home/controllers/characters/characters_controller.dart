@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rmapp/src/domain/entities/characters_search_input.dart';
-import 'package:rmapp/src/domain/entities/character_return_entity.dart';
-import 'package:rmapp/src/domain/usecases/get_api_characteres_usecase.dart';
+import 'package:rmapp/src/domain/character/entities/characters_search_input.dart';
+import 'package:rmapp/src/domain/character/entities/character_return_entity.dart';
+import 'package:rmapp/src/domain/character/usecases/get_api_characteres_usecase.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_state.dart';
 
 class CharactersController extends ValueNotifier<CharactersState> {

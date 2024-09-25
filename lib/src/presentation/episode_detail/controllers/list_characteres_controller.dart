@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rmapp/src/domain/usecases/get_characteres_from_urls_usecase.dart';
+import 'package:rmapp/src/domain/character/usecases/get_characteres_from_urls_usecase.dart';
 import 'package:rmapp/src/presentation/episode_detail/controllers/list_characteres_state.dart';
 
 class ListCharacteresController extends ValueNotifier<ListCharacteresState> {

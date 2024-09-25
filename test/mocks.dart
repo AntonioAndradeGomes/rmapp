@@ -1,12 +1,15 @@
 import 'package:mocktail/mocktail.dart';
 import 'package:rmapp/src/common/error/custom_exception.dart';
 import 'package:rmapp/src/common/models/info_model.dart';
-import 'package:rmapp/src/data/models/character_model.dart';
-import 'package:rmapp/src/data/models/character_return_model.dart';
-import 'package:rmapp/src/data/models/episode_model.dart';
-import 'package:rmapp/src/domain/repositories/characters_repository.dart';
+import 'package:rmapp/src/data/character/models/character_model.dart';
+import 'package:rmapp/src/data/character/models/character_return_model.dart';
+import 'package:rmapp/src/data/episode/models/episode_model.dart';
+import 'package:rmapp/src/domain/character/repositories/characters_repository.dart';
+import 'package:rmapp/src/domain/episode/repositories/episode_repository.dart';
 
 class CharactersRepositoryMock extends Mock implements CharactersRepository {}
+
+class EpisodesRepositoryMock extends Mock implements EpisodeRepository {}
 
 const characterListMock = <CharacterModel>[
   CharacterModel(

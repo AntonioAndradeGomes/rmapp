@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:rmapp/src/domain/entities/character_entity.dart';
+import 'package:rmapp/src/domain/character/entities/character_entity.dart';
 
 class ItemCharacterWidget extends StatelessWidget {
   final CharacterEntity item;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rmapp/src/domain/entities/episode_entity.dart';
+import 'package:rmapp/src/domain/episode/entities/episode_entity.dart';
 
 class EpisodeDetailsWidget extends StatelessWidget {
   final EpisodeEntity episodeEntity;

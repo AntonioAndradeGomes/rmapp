@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rmapp/src/common/constants/urls.dart';
-import 'package:rmapp/src/data/datasources/remote/character_datasource.dart';
-import 'package:rmapp/src/data/models/character_return_model.dart';
+import 'package:rmapp/src/data/character/datasources/remote/character_datasource.dart';
+import 'package:rmapp/src/data/character/models/character_return_model.dart';
 
 import '../../../../mocks.dart';
 
@@ -133,6 +133,314 @@ void main() {
                 ),
                 throwsA(isA<Exception>()),
               );
+            },
+          );
+
+          test(
+            'Should generate an unresponsive error',
+            () async {
+              when(
+                () => dio.get(
+                  url,
+                  queryParameters: {
+                    'page': page,
+                    'name': search,
+                  },
+                ),
+              ).thenThrow(
+                DioException(
+                  requestOptions: RequestOptions(
+                    path: url,
+                  ),
+                  response: null,
+                ),
+              );
+              expect(
+                () async => await datasource.getCharacters(
+                  page,
+                  search,
+                ),
+                throwsA(isA<Exception>()),
+              );
+            },
+          );
+
+          test(
+            'Should throw an unknown error',
+            () async {
+              when(
+                () => dio.get(
+                  url,
+                  queryParameters: {'page': page, 'name': search},
+                ),
+              ).thenThrow(
+                Exception(
+                  'Unexpected error',
+                ),
+              );
+
+              expect(
+                () async => await datasource.getCharacters(
+                  page,
+                  search,
+                ),
+                throwsA(isA<Exception>()),
+              );
+            },
+          );
+        },
+      );
+
+      group(
+        'Tests in getCharactersFromUrl',
+        () {
+          test(
+            'Should return a list of CharacterModel',
+            () async {
+              when(() => dio.get(charactersUrlsMock[0])).thenAnswer(
+                (_) async => Response(
+                  requestOptions: RequestOptions(
+                    path: charactersUrlsMock[0],
+                  ),
+                  data: characterListMock[0].toJson(),
+                  statusCode: 200,
+                ),
+              );
+              when(() => dio.get(charactersUrlsMock[1])).thenAnswer(
+                (_) async => Response(
+                  requestOptions: RequestOptions(
+                    path: charactersUrlsMock[1],
+                  ),
+                  data: characterListMock[1].toJson(),
+                  statusCode: 200,
+                ),
+              );
+              final results = await datasource.getCharactersFromUrl(
+                charactersUrlsMock.sublist(0, 2),
+              );
+              expect(
+                results,
+                equals(
+                  characterListMock.sublist(0, 2),
+                ),
+              );
+
+              verify(() => dio.get(charactersUrlsMock[0])).called(1);
+              verify(() => dio.get(charactersUrlsMock[1])).called(1);
+            },
+          );
+
+          test(
+            'should throw an exception when DioException occurs',
+            () async {
+              when(() => dio.get(charactersUrlsMock[0])).thenAnswer(
+                (_) async => Response(
+                  requestOptions: RequestOptions(
+                    path: charactersUrlsMock[0],
+                  ),
+                  data: characterListMock[0].toJson(),
+                  statusCode: 200,
+                ),
+              );
+              when(() => dio.get(charactersUrlsMock[1])).thenThrow(
+                DioException(
+                  requestOptions: RequestOptions(
+                    path: charactersUrlsMock[1],
+                  ),
+                  response: null,
+                  message: 'Failed to load characteres',
+                ),
+              );
+              when(() => dio.get(charactersUrlsMock[2])).thenThrow(
+                (_) async => Response(
+                  requestOptions: RequestOptions(
+                    path: charactersUrlsMock[2],
+                  ),
+                  data: characterListMock[2].toJson(),
+                  statusCode: 200,
+                ),
+              );
+              expect(
+                () async => await datasource.getCharactersFromUrl(
+                  charactersUrlsMock.sublist(0, 3),
+                ),
+                throwsA(
+                  isA<Exception>().having(
+                    (e) => e.toString(),
+                    'Error message',
+                    contains(
+                      'Failed to fetch characteres: Failed to load characteres',
+                    ),
+                  ),
+                ),
+              );
+              verify(() => dio.get(charactersUrlsMock[0])).called(1);
+              verify(() => dio.get(charactersUrlsMock[1])).called(1);
+              verifyNever(() => dio.get(charactersUrlsMock[2]));
+            },
+          );
+
+          test(
+            'Should throw an unknown error',
+            () async {
+              when(
+                () => dio.get(
+                  charactersUrlsMock[0],
+                ),
+              ).thenThrow(
+                Exception(
+                  'Unexpected error',
+                ),
+              );
+
+              expect(
+                () async => await datasource.getCharactersFromUrl(
+                  charactersUrlsMock.sublist(0, 3),
+                ),
+                throwsA(
+                  isA<Exception>().having(
+                    (e) => e.toString(),
+                    'Error message',
+                    contains(
+                      'Failed to fetch characteres',
+                    ),
+                  ),
+                ),
+              );
+              verify(() => dio.get(charactersUrlsMock[0])).called(1);
+              verifyNever(() => dio.get(charactersUrlsMock[1]));
+              verifyNever(() => dio.get(charactersUrlsMock[2]));
+            },
+          );
+        },
+      );
+
+      group(
+        'Tests in getEpisodeFromUrls',
+        () {
+          test(
+            'Should return a list of episodes',
+            () async {
+              when(() => dio.get(episodesUrlsMock[0])).thenAnswer(
+                (_) async => Response(
+                  requestOptions: RequestOptions(
+                    path: episodesUrlsMock[0],
+                  ),
+                  data: mockEpisodeList[0].toJson(),
+                  statusCode: 200,
+                ),
+              );
+              when(() => dio.get(episodesUrlsMock[1])).thenAnswer(
+                (_) async => Response(
+                  requestOptions: RequestOptions(
+                    path: episodesUrlsMock[1],
+                  ),
+                  data: mockEpisodeList[1].toJson(),
+                  statusCode: 200,
+                ),
+              );
+              when(() => dio.get(episodesUrlsMock[2])).thenAnswer(
+                (_) async => Response(
+                  requestOptions: RequestOptions(
+                    path: episodesUrlsMock[2],
+                  ),
+                  data: mockEpisodeList[2].toJson(),
+                  statusCode: 200,
+                ),
+              );
+
+              final result = await datasource.getEpisodeFromUrls(
+                episodesUrlsMock.sublist(0, 3),
+              );
+
+              expect(result.length, 3);
+              expect(
+                result,
+                mockEpisodeList.sublist(0, 3),
+              );
+            },
+          );
+
+          test(
+            'should throw an exception when DioException occurs',
+            () async {
+              when(() => dio.get(episodesUrlsMock[0])).thenAnswer(
+                (_) async => Response(
+                  requestOptions: RequestOptions(
+                    path: episodesUrlsMock[0],
+                  ),
+                  data: mockEpisodeList[0].toJson(),
+                  statusCode: 200,
+                ),
+              );
+              when(() => dio.get(episodesUrlsMock[1])).thenThrow(
+                DioException(
+                  requestOptions: RequestOptions(
+                    path: episodesUrlsMock[1],
+                  ),
+                  response: null,
+                  message: 'Exception',
+                ),
+              );
+              when(() => dio.get(episodesUrlsMock[2])).thenThrow(
+                (_) async => Response(
+                  requestOptions: RequestOptions(
+                    path: episodesUrlsMock[2],
+                  ),
+                  data: mockEpisodeList[2].toJson(),
+                  statusCode: 200,
+                ),
+              );
+              expect(
+                () async => await datasource.getEpisodeFromUrls(
+                  episodesUrlsMock.sublist(0, 3),
+                ),
+                throwsA(
+                  isA<Exception>().having(
+                    (e) => e.toString(),
+                    'Error message',
+                    contains(
+                      'Failed to fetch episodes: Exception',
+                    ),
+                  ),
+                ),
+              );
+              verify(() => dio.get(episodesUrlsMock[0])).called(1);
+              verify(() => dio.get(episodesUrlsMock[1])).called(1);
+              verifyNever(() => dio.get(episodesUrlsMock[2]));
+            },
+          );
+
+          test(
+            'Should throw an unknown error',
+            () async {
+              when(
+                () => dio.get(
+                  episodesUrlsMock[0],
+                ),
+              ).thenThrow(
+                Exception(
+                  'Unexpected error',
+                ),
+              );
+
+              expect(
+                () async => await datasource.getEpisodeFromUrls(
+                  episodesUrlsMock.sublist(0, 3),
+                ),
+                throwsA(
+                  isA<Exception>().having(
+                    (e) => e.toString(),
+                    'Error message',
+                    contains(
+                      'Failed to fetch episodes, an unknown error occurred',
+                    ),
+                  ),
+                ),
+              );
+              verify(() => dio.get(episodesUrlsMock[0])).called(1);
+              verifyNever(() => dio.get(episodesUrlsMock[1]));
+              verifyNever(() => dio.get(episodesUrlsMock[2]));
             },
           );
         },

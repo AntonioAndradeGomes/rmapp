@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rmapp/src/common/usecase/usecase.dart';
 import 'package:rmapp/src/dependencies/dependencies_injector.dart';
-import 'package:rmapp/src/domain/entities/character_entity.dart';
-import 'package:rmapp/src/domain/usecases/get_favorites_characteres_usecase.dart';
-import 'package:rmapp/src/domain/usecases/remove_character_favorite_usecase.dart';
+import 'package:rmapp/src/domain/character/entities/character_entity.dart';
+import 'package:rmapp/src/domain/character/usecases/get_favorites_characteres_usecase.dart';
+import 'package:rmapp/src/domain/character/usecases/remove_character_favorite_usecase.dart';
 import 'package:rmapp/src/presentation/favorites/controllers/favorites_state.dart';
 
 class FavoritesController extends ValueNotifier<FavoritesState> {

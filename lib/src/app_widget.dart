@@ -14,6 +14,9 @@ class AppWidget extends StatelessWidget {
           seedColor: Colors.teal,
         ),
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+        ),
       ),
       home: const HomePage(),
     );

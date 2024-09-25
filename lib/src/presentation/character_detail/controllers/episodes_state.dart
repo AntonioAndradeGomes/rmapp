@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:rmapp/src/common/error/custom_exception.dart';
-import 'package:rmapp/src/domain/entities/episode_entity.dart';
+import 'package:rmapp/src/domain/episode/entities/episode_entity.dart';
 
 sealed class EpisodesState extends Equatable {
   final List<EpisodeEntity>? episodes;

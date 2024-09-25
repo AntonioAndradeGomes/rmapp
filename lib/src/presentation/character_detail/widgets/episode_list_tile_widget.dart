@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rmapp/src/domain/entities/episode_entity.dart';
+import 'package:rmapp/src/domain/episode/entities/episode_entity.dart';
 
 class EpisodeListTileWidget extends StatelessWidget {
   final EpisodeEntity entity;

@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rick & Morty'),
-        centerTitle: true,
+        forceMaterialTransparency: true,
         actions: [
           IconButton(
             onPressed: () {

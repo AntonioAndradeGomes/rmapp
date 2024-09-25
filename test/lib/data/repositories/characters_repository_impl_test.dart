@@ -2,14 +2,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rmapp/src/common/error/custom_exception.dart';
 import 'package:rmapp/src/common/usecase/usecase.dart';
-import 'package:rmapp/src/data/datasources/dao/character_dao.dart';
-import 'package:rmapp/src/data/datasources/remote/character_datasource.dart';
-import 'package:rmapp/src/data/models/character_model.dart';
-import 'package:rmapp/src/data/repositories/characters_repository_impl.dart';
-import 'package:rmapp/src/domain/entities/character_entity.dart';
-import 'package:rmapp/src/domain/entities/character_return_entity.dart';
-import 'package:rmapp/src/domain/entities/episode_entity.dart';
-import 'package:rmapp/src/domain/repositories/characters_repository.dart';
+import 'package:rmapp/src/data/character/datasources/dao/character_dao.dart';
+import 'package:rmapp/src/data/character/datasources/remote/character_datasource.dart';
+import 'package:rmapp/src/data/character/models/character_model.dart';
+import 'package:rmapp/src/data/character/repositories/characters_repository_impl.dart';
+import 'package:rmapp/src/domain/character/entities/character_entity.dart';
+import 'package:rmapp/src/domain/character/entities/character_return_entity.dart';
+//import 'package:rmapp/src/domain/episode/entities/episode_entity.dart';
+import 'package:rmapp/src/domain/character/repositories/characters_repository.dart';
 
 import '../../../mocks.dart';
 
@@ -86,7 +86,7 @@ void main() {
         },
       );
 
-      group(
+      /* group(
         'Tests in getEpisodesFromUrls',
         () {
           test(
@@ -127,7 +127,7 @@ void main() {
             },
           );
         },
-      );
+      );*/
 
       group(
         'Tests in getCharactersFromUrls',

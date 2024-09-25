@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rmapp/src/common/widgets/error_widget.dart';
 import 'package:rmapp/src/dependencies/dependencies_injector.dart';
-import 'package:rmapp/src/domain/entities/episode_entity.dart';
+import 'package:rmapp/src/domain/episode/entities/episode_entity.dart';
 import 'package:rmapp/src/presentation/episode_detail/controllers/list_characteres_controller.dart';
 import 'package:rmapp/src/presentation/episode_detail/controllers/list_characteres_state.dart';
 import 'package:rmapp/src/presentation/episode_detail/widgets/episode_details_widget.dart';
@@ -33,10 +33,10 @@ class _EpisodeDetailPageState extends State<EpisodeDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: Text(
           widget.episodeEntity.episode,
         ),
+        forceMaterialTransparency: true,
       ),
       body: Column(
         children: [

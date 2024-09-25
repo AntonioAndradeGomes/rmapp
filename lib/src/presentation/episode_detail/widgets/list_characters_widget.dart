@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rmapp/src/domain/entities/character_entity.dart';
+import 'package:rmapp/src/domain/character/entities/character_entity.dart';
 import 'package:rmapp/src/presentation/widgets/character_item_widget.dart';
 
 class ListCharactersWidget extends StatelessWidget {
@@ -21,7 +21,7 @@ class ListCharactersWidget extends StatelessWidget {
       shrinkWrap: true,
       itemCount: items.length,
       separatorBuilder: (_, __) => const SizedBox(
-        height: 5,
+        height: 10,
       ),
       itemBuilder: (_, index) {
         final item = items[index];

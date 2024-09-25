@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rmapp/src/domain/entities/character_entity.dart';
+import 'package:rmapp/src/domain/character/entities/character_entity.dart';
 import 'package:rmapp/src/presentation/character_detail/pages/character_detail_page.dart';
 import 'package:rmapp/src/presentation/home/widgets/item_character_widget.dart';
 
