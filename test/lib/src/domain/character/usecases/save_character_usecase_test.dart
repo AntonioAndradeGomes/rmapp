@@ -2,39 +2,41 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:rmapp/src/common/error/custom_exception.dart';
+import 'package:rmapp/src/common/usecase/usecase.dart';
 import 'package:rmapp/src/domain/character/repositories/characters_repository.dart';
-import 'package:rmapp/src/domain/character/usecases/remove_character_favorite_usecase.dart';
+import 'package:rmapp/src/domain/character/usecases/save_character_usecase.dart';
 
-import '../../../../mocks.dart';
+import '../../../../../mocks.dart';
 
 void main() {
   group(
-    'Tests in RemoveCharacterFavoriteUsecase',
+    'Tests in SaveCharacterUsecase',
     () {
       late CharactersRepository repository;
-      late RemoveCharacterFavoriteUsecase usecase;
+      late SaveCharacterUsecase usecase;
 
       setUp(() {
         repository = CharactersRepositoryMock();
-        usecase = RemoveCharacterFavoriteUsecase(
+        usecase = SaveCharacterUsecase(
           repository: repository,
         );
       });
 
       test(
-        'should return the id of the removed entity',
+        'must save a CharacterEntity',
         () async {
           when(
-            () => repository.removeCharacterInLocalStorage(
-                resultCharacterReturnModel.results.first),
+            () => repository.saveCharactersInLocalStorage(
+              resultCharacterReturnModel.results.first,
+            ),
           ).thenAnswer(
-            (_) async => const Success(1),
+            (_) async => Success(NoParams()),
           );
           final test =
               await usecase.call(resultCharacterReturnModel.results.first);
 
           expect(test.isSuccess(), true);
-          expect(test.getOrNull(), 1);
+          expect(test.getOrNull(), isA<NoParams>());
         },
       );
 
@@ -42,7 +44,7 @@ void main() {
         'should return the CustomException',
         () async {
           when(
-            () => repository.removeCharacterInLocalStorage(
+            () => repository.saveCharactersInLocalStorage(
               resultCharacterReturnModel.results.first,
             ),
           ).thenAnswer(
@@ -51,7 +53,6 @@ void main() {
 
           final test =
               await usecase.call(resultCharacterReturnModel.results.first);
-
           expect(test.isSuccess(), false);
           expect(test.isError(), true);
           expect(test.exceptionOrNull(), isA<CustomException>());

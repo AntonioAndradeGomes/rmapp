@@ -3,56 +3,55 @@ import 'package:mocktail/mocktail.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:rmapp/src/common/error/custom_exception.dart';
 import 'package:rmapp/src/common/usecase/usecase.dart';
+import 'package:rmapp/src/domain/character/entities/character_entity.dart';
 import 'package:rmapp/src/domain/character/repositories/characters_repository.dart';
-import 'package:rmapp/src/domain/character/usecases/save_character_usecase.dart';
+import 'package:rmapp/src/domain/character/usecases/get_favorites_characteres_usecase.dart';
 
-import '../../../../mocks.dart';
+import '../../../../../mocks.dart';
 
 void main() {
   group(
-    'Tests in SaveCharacterUsecase',
+    'Tests in GetFavoritesCharacteresUseCase',
     () {
       late CharactersRepository repository;
-      late SaveCharacterUsecase usecase;
+      late GetFavoritesCharacteresUseCase usecase;
 
       setUp(() {
         repository = CharactersRepositoryMock();
-        usecase = SaveCharacterUsecase(
+        usecase = GetFavoritesCharacteresUseCase(
           repository: repository,
         );
       });
 
       test(
-        'must save a CharacterEntity',
+        'Must return a list of CharacterEntity',
         () async {
           when(
-            () => repository.saveCharactersInLocalStorage(
-              resultCharacterReturnModel.results.first,
-            ),
+            () => repository.getCharactersFavorites(),
           ).thenAnswer(
-            (_) async => Success(NoParams()),
+            (_) async => Success(resultCharacterReturnModel.results),
           );
-          final test =
-              await usecase.call(resultCharacterReturnModel.results.first);
+
+          final test = await usecase.call(NoParams());
 
           expect(test.isSuccess(), true);
-          expect(test.getOrNull(), isA<NoParams>());
+          expect(test.isError(), false);
+          expect(test.getOrNull(), isA<List<CharacterEntity>>());
+          expect(test.getOrNull()!.length, 5);
         },
       );
 
       test(
-        'should return the CustomException',
+        'Should return a failure',
         () async {
           when(
-            () => repository.saveCharactersInLocalStorage(
-              resultCharacterReturnModel.results.first,
-            ),
+            () => repository.getCharactersFavorites(),
           ).thenAnswer(
             (_) async => const Failure(customExceptionMock),
           );
 
-          final test =
-              await usecase.call(resultCharacterReturnModel.results.first);
+          final test = await usecase.call(NoParams());
+
           expect(test.isSuccess(), false);
           expect(test.isError(), true);
           expect(test.exceptionOrNull(), isA<CustomException>());

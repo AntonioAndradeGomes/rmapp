@@ -7,7 +7,7 @@ import 'package:rmapp/src/domain/character/entities/characters_search_input.dart
 import 'package:rmapp/src/domain/character/repositories/characters_repository.dart';
 import 'package:rmapp/src/domain/character/usecases/get_api_characteres_usecase.dart';
 
-import '../../../../mocks.dart';
+import '../../../../../mocks.dart';
 
 void main() {
   group(

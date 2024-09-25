@@ -5,7 +5,7 @@ import 'package:rmapp/src/common/error/custom_exception.dart';
 import 'package:rmapp/src/domain/episode/entities/episode_entity.dart';
 import 'package:rmapp/src/domain/episode/repositories/episode_repository.dart';
 import 'package:rmapp/src/domain/episode/usecases/get_episodes_from_urls_usecase.dart';
-import '../../../../mocks.dart';
+import '../../../../../mocks.dart';
 
 void main() {
   group(

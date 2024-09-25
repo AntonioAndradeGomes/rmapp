@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rmapp/src/common/error/custom_exception.dart';
 import 'package:rmapp/src/common/models/info_model.dart';
@@ -6,6 +7,8 @@ import 'package:rmapp/src/data/character/models/character_return_model.dart';
 import 'package:rmapp/src/data/episode/models/episode_model.dart';
 import 'package:rmapp/src/domain/character/repositories/characters_repository.dart';
 import 'package:rmapp/src/domain/episode/repositories/episode_repository.dart';
+
+class MockDio extends Mock implements Dio {}
 
 class CharactersRepositoryMock extends Mock implements CharactersRepository {}
 

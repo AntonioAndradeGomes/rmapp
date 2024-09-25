@@ -5,9 +5,7 @@ import 'package:rmapp/src/common/constants/urls.dart';
 import 'package:rmapp/src/data/character/datasources/remote/character_datasource.dart';
 import 'package:rmapp/src/data/character/models/character_return_model.dart';
 
-import '../../../../mocks.dart';
-
-class MockDio extends Mock implements Dio {}
+import '../../../../../../mocks.dart';
 
 void main() {
   group(
