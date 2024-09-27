@@ -20,7 +20,7 @@ This is a Flutter application about Rick and Morty characters built in order to 
 
 * [ ] Test the application functions
 * [ ] Abstract the HTTP client library
-* [ ] Adjustment on character details screen, page view between details and episode list
+* [x] Adjustment on character details screen, page view between details and episode list
 * [ ] Added filtering to the main screen character list
 
 ## How to run the application

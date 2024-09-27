@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rmapp/src/common/routes/routes.dart';
 import 'package:rmapp/src/domain/character/entities/character_entity.dart';
-import 'package:rmapp/src/presentation/character_detail/pages/character_detail_page.dart';
 import 'package:rmapp/src/presentation/home/widgets/item_character_widget.dart';
 
 class ItensCharactersGridWidget extends StatefulWidget {
@@ -58,12 +58,9 @@ class _ItensCharactersGridWidgetState extends State<ItensCharactersGridWidget> {
             return ItemCharacterWidget(
               item: item,
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => CharacterDetailPage(
-                      characterEntity: item,
-                    ),
-                  ),
+                Navigator.of(context).pushNamed(
+                  Routes.characterDetail,
+                  arguments: item,
                 );
               },
             );

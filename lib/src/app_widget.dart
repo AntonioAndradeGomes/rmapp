@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rmapp/src/presentation/home/pages/home_page.dart';
+import 'package:rmapp/src/common/routes/routes.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
@@ -18,7 +18,8 @@ class AppWidget extends StatelessWidget {
           centerTitle: true,
         ),
       ),
-      home: const HomePage(),
+      onGenerateRoute: Routes.onGenerateRoute,
+      initialRoute: Routes.home,
     );
   }
 }
