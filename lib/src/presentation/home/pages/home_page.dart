@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:rmapp/src/common/routes/routes.dart';
 import 'package:rmapp/src/common/widgets/error_widget.dart';
 import 'package:rmapp/src/dependencies/dependencies_injector.dart';
+import 'package:rmapp/src/domain/character/entities/filter_character_entity.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_controller.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_state.dart';
+import 'package:rmapp/src/presentation/home/widgets/alerts/filter_dialog_widget.dart';
 import 'package:rmapp/src/presentation/home/widgets/itens_characters_grid_widget.dart';
 import 'package:rmapp/src/presentation/home/widgets/loading_more_items_widget.dart';
 import 'package:rmapp/src/presentation/home/widgets/search_widget.dart';
@@ -49,6 +51,22 @@ class _HomePageState extends State<HomePage> {
               Icons.favorite,
             ),
           ),
+          IconButton(
+            onPressed: () async {
+              final filter = await showDialog<FilterCharacter?>(
+                context: context,
+                builder: (_) => FilterDialogWidget(
+                  activeFilter: _controller.filter,
+                ),
+              );
+              if (filter != null) {
+                _controller.onFilter(filter);
+              }
+            },
+            icon: const Icon(
+              Icons.filter_list_outlined,
+            ),
+          )
         ],
       ),
       body: Column(
@@ -57,9 +75,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(10),
             child: SearchWidget(
               hintText: 'Search',
-              onChanged: (value) {
-                _controller.onFilter(value);
-              },
+              onChanged: _controller.onSearchByText,
             ),
           ),
           Expanded(

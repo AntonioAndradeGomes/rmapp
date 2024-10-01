@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rmapp/src/domain/character/entities/characters_search_input.dart';
 import 'package:rmapp/src/domain/character/entities/character_return_entity.dart';
+import 'package:rmapp/src/domain/character/entities/filter_character_entity.dart';
 import 'package:rmapp/src/domain/character/usecases/get_api_characteres_usecase.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_state.dart';
 
@@ -11,6 +12,7 @@ class CharactersController extends ValueNotifier<CharactersState> {
   bool _haveItens = true;
   final loadingMore = ValueNotifier<bool>(false);
   String search = '';
+  FilterCharacter filter = FilterCharacter();
 
   CharactersController({
     required GetApiCharacteresUsecase getApiCharacteresUsecase,
@@ -29,6 +31,7 @@ class CharactersController extends ValueNotifier<CharactersState> {
       CharactersSearchInput(
         page: _page,
         search: search,
+        filterCharacter: filter,
       ),
     );
     result.fold(
@@ -64,6 +67,7 @@ class CharactersController extends ValueNotifier<CharactersState> {
         CharactersSearchInput(
           page: _page,
           search: search,
+          filterCharacter: filter,
         ),
       );
 
@@ -85,8 +89,13 @@ class CharactersController extends ValueNotifier<CharactersState> {
     }
   }
 
-  Future<void> onFilter(String value) async {
+  Future<void> onSearchByText(String value) async {
     search = value;
+    loadData();
+  }
+
+  Future<void> onFilter(FilterCharacter value) async {
+    filter = value;
     loadData();
   }
 

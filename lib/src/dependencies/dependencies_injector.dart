@@ -18,6 +18,7 @@ import 'package:rmapp/src/presentation/character_detail/controllers/episodes_con
 import 'package:rmapp/src/presentation/episode_detail/controllers/list_characteres_controller.dart';
 import 'package:rmapp/src/presentation/favorites/controllers/favorites_controller.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_controller.dart';
+import 'package:rmapp/src/presentation/home/controllers/filter/filter_controller.dart';
 
 final injector = InjectorImp();
 
@@ -111,5 +112,8 @@ Future<void> initializeDependencies() async {
     )
     ..registerFactory(
       () => FavoritesController(),
+    )
+    ..registerFactory(
+      () => FilterController(),
     );
 }

@@ -4,6 +4,7 @@ import 'package:result_dart/result_dart.dart';
 import 'package:rmapp/src/common/error/custom_exception.dart';
 import 'package:rmapp/src/domain/character/entities/character_return_entity.dart';
 import 'package:rmapp/src/domain/character/entities/characters_search_input.dart';
+import 'package:rmapp/src/domain/character/entities/filter_character_entity.dart';
 import 'package:rmapp/src/domain/character/repositories/characters_repository.dart';
 import 'package:rmapp/src/domain/character/usecases/get_api_characteres_usecase.dart';
 
@@ -39,6 +40,7 @@ void main() {
             const CharactersSearchInput(
               page: 1,
               search: '',
+              filterCharacter: FilterCharacter(),
             ),
           );
 
@@ -67,6 +69,7 @@ void main() {
             const CharactersSearchInput(
               page: 1,
               search: '',
+              filterCharacter: FilterCharacter(),
             ),
           );
 

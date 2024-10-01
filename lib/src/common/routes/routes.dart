@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:rmapp/src/domain/character/entities/character_entity.dart';
 import 'package:rmapp/src/domain/episode/entities/episode_entity.dart';
