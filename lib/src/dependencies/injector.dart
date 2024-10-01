@@ -1,5 +1,4 @@
 //abstriando o package get_it de modo que eu precise mudar somente aqui caso o package mude
-
 import 'package:get_it/get_it.dart';
 
 abstract class Injector<T extends Object> {

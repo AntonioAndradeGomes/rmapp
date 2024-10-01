@@ -84,6 +84,7 @@ class _CharacterDetailPageState extends State<CharacterDetailPage>
                     titlePadding: const EdgeInsets.only(
                       bottom: 50,
                     ),
+                    centerTitle: true,
                     background: CachedNetworkImage(
                       fit: BoxFit.fitWidth,
                       imageUrl: widget.characterEntity.image,

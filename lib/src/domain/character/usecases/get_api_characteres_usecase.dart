@@ -18,8 +18,7 @@ class GetApiCharacteresUsecase
     CharactersSearchInput input,
   ) {
     return _repository.getCaractersFromApi(
-      input.page,
-      input.search,
+      input,
     );
   }
 }

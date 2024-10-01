@@ -12,6 +12,10 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTapOutside: (event) {
+        FocusScope.of(context).unfocus();
+      },
+      autofocus: false,
       decoration: InputDecoration(
         hintText: hintText,
         border: OutlineInputBorder(

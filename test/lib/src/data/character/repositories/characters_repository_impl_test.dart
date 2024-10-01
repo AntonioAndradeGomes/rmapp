@@ -5,9 +5,12 @@ import 'package:rmapp/src/common/usecase/usecase.dart';
 import 'package:rmapp/src/data/character/datasources/dao/character_dao.dart';
 import 'package:rmapp/src/data/character/datasources/remote/character_datasource.dart';
 import 'package:rmapp/src/data/character/models/character_model.dart';
+import 'package:rmapp/src/data/character/models/characters_search_input_model.dart';
 import 'package:rmapp/src/data/character/repositories/characters_repository_impl.dart';
 import 'package:rmapp/src/domain/character/entities/character_entity.dart';
 import 'package:rmapp/src/domain/character/entities/character_return_entity.dart';
+import 'package:rmapp/src/domain/character/entities/characters_search_input.dart';
+import 'package:rmapp/src/domain/character/entities/filter_character_entity.dart';
 import 'package:rmapp/src/domain/character/repositories/characters_repository.dart';
 
 import '../../../../../mocks.dart';
@@ -36,22 +39,25 @@ void main() {
       group(
         'Tests in function getCaractersFromApi',
         () {
+          const search = CharactersSearchInput(
+            page: 1,
+            search: '',
+            filterCharacter: FilterCharacter(),
+          );
+
+          final searchModel = CharactersSearchInputModel.fromEntity(search);
           test(
             'Should return CharacterReturnEntity',
             () async {
               when(
                 () => datasource.getCharacters(
-                  any(),
-                  any(),
+                  searchModel,
                 ),
               ).thenAnswer(
                 (_) async => resultCharacterReturnModel,
               );
 
-              final test = await repository.getCaractersFromApi(
-                1,
-                '',
-              );
+              final test = await repository.getCaractersFromApi(search);
 
               expect(test.isSuccess(), true);
               expect(test.isError(), false);
@@ -59,7 +65,7 @@ void main() {
               expect(test.getOrNull()!.info,
                   equals(resultCharacterReturnModel.info));
               expect(test.getOrNull()!.results.length, 5);
-              verify(() => datasource.getCharacters(1, '')).called(1);
+              verify(() => datasource.getCharacters(searchModel)).called(1);
             },
           );
 
@@ -67,15 +73,12 @@ void main() {
             'Should return a failure',
             () async {
               when(
-                () => datasource.getCharacters(
-                  any(),
-                  any(),
-                ),
+                () => datasource.getCharacters(searchModel),
               ).thenThrow(
                 (_) async => Exception(),
               );
 
-              final test = await repository.getCaractersFromApi(1, '');
+              final test = await repository.getCaractersFromApi(search);
 
               expect(test.isSuccess(), false);
               expect(test.isError(), true);

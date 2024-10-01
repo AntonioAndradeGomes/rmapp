@@ -4,6 +4,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:rmapp/src/common/constants/urls.dart';
 import 'package:rmapp/src/data/character/datasources/remote/character_datasource.dart';
 import 'package:rmapp/src/data/character/models/character_return_model.dart';
+import 'package:rmapp/src/data/character/models/characters_search_input_model.dart';
+import 'package:rmapp/src/domain/character/entities/characters_search_input.dart';
+import 'package:rmapp/src/domain/character/entities/filter_character_entity.dart';
 
 import '../../../../../../mocks.dart';
 
@@ -29,8 +32,13 @@ void main() {
         'Tests in getCharacters',
         () {
           const url = "${Urls.baseUrl}/character";
-          const page = 1;
-          const search = 'teste';
+          const search = CharactersSearchInput(
+            page: 1,
+            search: '',
+            filterCharacter: FilterCharacter(),
+          );
+
+          final searchModel = CharactersSearchInputModel.fromEntity(search);
           test(
             'should return the list of characters the getCharacters function',
             () async {
@@ -38,7 +46,7 @@ void main() {
               when(
                 () => dio.get(
                   url,
-                  queryParameters: {'page': page, 'name': search},
+                  queryParameters: searchModel.toJson(),
                 ),
               ).thenAnswer(
                 (_) async => Response(
@@ -47,10 +55,7 @@ void main() {
                   requestOptions: RequestOptions(path: url),
                 ),
               );
-              final response = await datasource.getCharacters(
-                page,
-                search,
-              );
+              final response = await datasource.getCharacters(searchModel);
               expect(response, isA<CharacterReturnModel>());
             },
           );
@@ -64,10 +69,7 @@ void main() {
               when(
                 () => dio.get(
                   url,
-                  queryParameters: {
-                    'page': page,
-                    'name': search,
-                  },
+                  queryParameters: searchModel.toJson(),
                 ),
               ).thenThrow(
                 DioException(
@@ -84,10 +86,7 @@ void main() {
                 ),
               );
 
-              final result = await datasource.getCharacters(
-                page,
-                search,
-              );
+              final result = await datasource.getCharacters(searchModel);
               expect(result, isA<CharacterReturnModel>());
               expect(result.info.count, 0);
               expect(result.info.pages, 1);
@@ -101,13 +100,7 @@ void main() {
             'It should throw an error with response in statusMessage',
             () async {
               when(
-                () => dio.get(
-                  url,
-                  queryParameters: {
-                    'page': page,
-                    'name': search,
-                  },
-                ),
+                () => dio.get(url, queryParameters: searchModel.toJson()),
               ).thenThrow(
                 DioException(
                   requestOptions: RequestOptions(
@@ -125,10 +118,7 @@ void main() {
               );
 
               expect(
-                () async => await datasource.getCharacters(
-                  page,
-                  search,
-                ),
+                () async => await datasource.getCharacters(searchModel),
                 throwsA(isA<Exception>()),
               );
             },
@@ -140,10 +130,7 @@ void main() {
               when(
                 () => dio.get(
                   url,
-                  queryParameters: {
-                    'page': page,
-                    'name': search,
-                  },
+                  queryParameters: searchModel.toJson(),
                 ),
               ).thenThrow(
                 DioException(
@@ -154,10 +141,7 @@ void main() {
                 ),
               );
               expect(
-                () async => await datasource.getCharacters(
-                  page,
-                  search,
-                ),
+                () async => await datasource.getCharacters(searchModel),
                 throwsA(isA<Exception>()),
               );
             },
@@ -169,7 +153,7 @@ void main() {
               when(
                 () => dio.get(
                   url,
-                  queryParameters: {'page': page, 'name': search},
+                  queryParameters: searchModel.toJson(),
                 ),
               ).thenThrow(
                 Exception(
@@ -178,10 +162,7 @@ void main() {
               );
 
               expect(
-                () async => await datasource.getCharacters(
-                  page,
-                  search,
-                ),
+                () async => await datasource.getCharacters(searchModel),
                 throwsA(isA<Exception>()),
               );
             },

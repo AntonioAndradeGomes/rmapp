@@ -3,11 +3,11 @@ import 'package:rmapp/src/common/error/custom_exception.dart';
 import 'package:rmapp/src/common/usecase/usecase.dart';
 import 'package:rmapp/src/domain/character/entities/character_entity.dart';
 import 'package:rmapp/src/domain/character/entities/character_return_entity.dart';
+import 'package:rmapp/src/domain/character/entities/characters_search_input.dart';
 
 abstract interface class CharactersRepository {
   Future<Result<CharacterReturnEntity, CustomException>> getCaractersFromApi(
-    int page,
-    String search,
+    CharactersSearchInput search,
   );
 
   Future<Result<List<CharacterEntity>, CustomException>> getCharactersFromUrls(

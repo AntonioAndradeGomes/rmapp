@@ -1,24 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:rmapp/src/common/database/app_database.dart';
-import 'package:rmapp/src/data/character/datasources/dao/character_dao.dart';
-import 'package:rmapp/src/data/character/datasources/remote/character_datasource.dart';
-import 'package:rmapp/src/data/character/repositories/characters_repository_impl.dart';
-import 'package:rmapp/src/data/episode/datasources/remote/episode_datasource.dart';
-import 'package:rmapp/src/data/episode/repositories/episode_repository_impl.dart';
-import 'package:rmapp/src/dependencies/injector.dart';
-import 'package:rmapp/src/domain/character/repositories/characters_repository.dart';
-import 'package:rmapp/src/domain/character/usecases/get_api_characteres_usecase.dart';
-import 'package:rmapp/src/domain/character/usecases/get_characteres_from_urls_usecase.dart';
-import 'package:rmapp/src/domain/episode/repositories/episode_repository.dart';
-import 'package:rmapp/src/domain/episode/usecases/get_episodes_from_urls_usecase.dart';
-import 'package:rmapp/src/domain/character/usecases/get_favorites_characteres_usecase.dart';
-import 'package:rmapp/src/domain/character/usecases/remove_character_favorite_usecase.dart';
-import 'package:rmapp/src/domain/character/usecases/save_character_usecase.dart';
-import 'package:rmapp/src/presentation/character_detail/controllers/episodes_controller.dart';
-import 'package:rmapp/src/presentation/episode_detail/controllers/list_characteres_controller.dart';
-import 'package:rmapp/src/presentation/favorites/controllers/favorites_controller.dart';
-import 'package:rmapp/src/presentation/home/controllers/characters/characters_controller.dart';
-import 'package:rmapp/src/presentation/home/controllers/filter/filter_controller.dart';
+import './dependencies_injector_imports.dart';
 
 final injector = InjectorImp();
 

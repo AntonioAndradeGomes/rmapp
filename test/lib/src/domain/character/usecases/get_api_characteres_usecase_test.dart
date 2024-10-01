@@ -24,25 +24,24 @@ void main() {
         );
       });
 
+      const search = CharactersSearchInput(
+        page: 1,
+        search: '',
+        filterCharacter: FilterCharacter(),
+      );
+
       test(
         'Must return a CharacterReturnEntity',
         () async {
           when(
             () => repository.getCaractersFromApi(
-              any(),
-              any(),
+              search,
             ),
           ).thenAnswer(
             (_) async => const Success(resultCharacterReturnModel),
           );
 
-          final test = await usecase.call(
-            const CharactersSearchInput(
-              page: 1,
-              search: '',
-              filterCharacter: FilterCharacter(),
-            ),
-          );
+          final test = await usecase.call(search);
 
           expect(test.isSuccess(), true);
           expect(test.isError(), false);
@@ -57,21 +56,12 @@ void main() {
         'Should return a failure',
         () async {
           when(
-            () => repository.getCaractersFromApi(
-              any(),
-              any(),
-            ),
+            () => repository.getCaractersFromApi(search),
           ).thenAnswer(
             (_) async => const Failure(customExceptionMock),
           );
 
-          final test = await usecase.call(
-            const CharactersSearchInput(
-              page: 1,
-              search: '',
-              filterCharacter: FilterCharacter(),
-            ),
-          );
+          final test = await usecase.call(search);
 
           expect(test.isSuccess(), false);
           expect(test.isError(), true);

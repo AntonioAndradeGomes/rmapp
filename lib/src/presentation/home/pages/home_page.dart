@@ -89,6 +89,11 @@ class _HomePageState extends State<HomePage> {
                 }
                 if (state is SuccessCharactersState) {
                   final items = state.characterReturnEntity!.results;
+                  if (items.isEmpty) {
+                    return Center(
+                      child: Text('There are no characters to list'),
+                    );
+                  }
                   return Stack(
                     children: [
                       ItensCharactersGridWidget(

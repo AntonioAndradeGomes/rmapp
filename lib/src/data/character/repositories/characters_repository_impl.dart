@@ -5,8 +5,10 @@ import 'package:rmapp/src/common/usecase/usecase.dart';
 import 'package:rmapp/src/data/character/datasources/dao/character_dao.dart';
 import 'package:rmapp/src/data/character/datasources/remote/character_datasource.dart';
 import 'package:rmapp/src/data/character/models/character_model.dart';
+import 'package:rmapp/src/data/character/models/characters_search_input_model.dart';
 import 'package:rmapp/src/domain/character/entities/character_entity.dart';
 import 'package:rmapp/src/domain/character/entities/character_return_entity.dart';
+import 'package:rmapp/src/domain/character/entities/characters_search_input.dart';
 import 'package:rmapp/src/domain/character/repositories/characters_repository.dart';
 
 class CharactersRepositoryImpl implements CharactersRepository {
@@ -20,12 +22,11 @@ class CharactersRepositoryImpl implements CharactersRepository {
         _characterDao = characterDao;
   @override
   Future<Result<CharacterReturnEntity, CustomException>> getCaractersFromApi(
-    int page,
-    String search,
+    CharactersSearchInput search,
   ) async {
     try {
-      final characterReturnModel =
-          await _datasource.getCharacters(page, search);
+      final characterReturnModel = await _datasource
+          .getCharacters(CharactersSearchInputModel.fromEntity(search));
       return characterReturnModel.toSuccess();
     } catch (e) {
       return CustomException(

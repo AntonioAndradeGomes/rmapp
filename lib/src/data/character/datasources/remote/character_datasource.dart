@@ -4,12 +4,12 @@ import 'package:rmapp/src/common/constants/urls.dart';
 import 'package:rmapp/src/common/models/info_model.dart';
 import 'package:rmapp/src/data/character/models/character_model.dart';
 import 'package:rmapp/src/data/character/models/character_return_model.dart';
+import 'package:rmapp/src/data/character/models/characters_search_input_model.dart';
 import 'package:rmapp/src/data/episode/models/episode_model.dart';
 
 abstract interface class CharacterDatasource {
   Future<CharacterReturnModel> getCharacters(
-    int page,
-    String search,
+    CharactersSearchInputModel search,
   );
 
   Future<List<EpisodeModel>> getEpisodeFromUrls(
@@ -30,15 +30,11 @@ class CharacterDatasourceImpl implements CharacterDatasource {
 
   @override
   Future<CharacterReturnModel> getCharacters(
-    int page,
-    String search,
+    CharactersSearchInputModel search,
   ) async {
     try {
       const url = "${Urls.baseUrl}/character";
-      final query = {
-        'page': page,
-        if (search.isNotEmpty) 'name': search,
-      };
+      final query = search.toJson();
       final response = await _dio.get(
         url,
         queryParameters: query,
