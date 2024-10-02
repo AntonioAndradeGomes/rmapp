@@ -1,4 +1,7 @@
-class PaginationManager {
+import 'package:equatable/equatable.dart';
+
+// ignore: must_be_immutable
+class PaginationManager extends Equatable {
   int _page = 1;
   bool _hasMoreItems = true;
 
@@ -17,4 +20,7 @@ class PaginationManager {
   void noMoreItems() {
     _hasMoreItems = false;
   }
+
+  @override
+  List<Object?> get props => [_page, _hasMoreItems];
 }
