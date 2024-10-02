@@ -4,12 +4,12 @@ import 'package:rmapp/src/domain/character/entities/character_entity.dart';
 import 'package:rmapp/src/presentation/home/widgets/item_character_widget.dart';
 
 class ItensCharactersGridWidget extends StatefulWidget {
-  final ScrollController? scrollController;
+  final ScrollController scrollController;
   final List<CharacterEntity> items;
   final Future<void> Function() loadMore;
   const ItensCharactersGridWidget({
     super.key,
-    this.scrollController,
+    required this.scrollController,
     required this.items,
     required this.loadMore,
   });
@@ -26,10 +26,18 @@ class _ItensCharactersGridWidgetState extends State<ItensCharactersGridWidget> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkIfShouldLoadMore();
     });
+    widget.scrollController.addListener(_onScroll);
   }
 
   void _checkIfShouldLoadMore() {
-    if (widget.scrollController!.position.maxScrollExtent == 0) {
+    if (widget.scrollController.position.maxScrollExtent == 0) {
+      widget.loadMore();
+    }
+  }
+
+  void _onScroll() {
+    if (widget.scrollController.position.pixels >=
+        widget.scrollController.position.maxScrollExtent) {
       widget.loadMore();
     }
   }

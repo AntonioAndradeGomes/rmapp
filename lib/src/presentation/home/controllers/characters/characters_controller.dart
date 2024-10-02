@@ -3,40 +3,38 @@ import 'package:rmapp/src/domain/character/entities/characters_search_input.dart
 import 'package:rmapp/src/domain/character/entities/character_return_entity.dart';
 import 'package:rmapp/src/domain/character/entities/filter_character_entity.dart';
 import 'package:rmapp/src/domain/character/usecases/get_api_characteres_usecase.dart';
+import 'package:rmapp/src/presentation/home/controllers/characters/pagination_manager.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_state.dart';
 
 class CharactersController extends ValueNotifier<CharactersState> {
   final GetApiCharacteresUsecase _getApiCharacteresUsecase;
-  late final ScrollController scrollController;
-  int _page = 1;
-  bool _haveItens = true;
+  final PaginationManager _paginationManager;
   final loadingMore = ValueNotifier<bool>(false);
   String search = '';
   FilterCharacter filter = FilterCharacter();
 
   CharactersController({
     required GetApiCharacteresUsecase getApiCharacteresUsecase,
+    required PaginationManager paginationManager,
   })  : _getApiCharacteresUsecase = getApiCharacteresUsecase,
-        super(LoadingCharactersState()) {
-    scrollController = ScrollController();
-    scrollController.addListener(_onScroll);
-  }
+        _paginationManager = paginationManager,
+        super(LoadingCharactersState());
 
   Future<void> loadData() async {
     value = LoadingCharactersState();
-    _page = 1;
+    _paginationManager.reset();
     loadingMore.value = false;
-    _haveItens = true;
+
     final result = await _getApiCharacteresUsecase(
       CharactersSearchInput(
-        page: _page,
+        page: _paginationManager.page,
         search: search,
         filterCharacter: filter,
       ),
     );
     result.fold(
       (success) {
-        _page++;
+        _paginationManager.nextPage();
         value = SuccessCharactersState(success);
       },
       (error) {
@@ -45,27 +43,20 @@ class CharactersController extends ValueNotifier<CharactersState> {
     );
   }
 
-  void _onScroll() {
-    if (scrollController.position.pixels >=
-        scrollController.position.maxScrollExtent) {
-      loadMoreItens();
-    }
-  }
-
   Future<void> loadMoreItens() async {
-    if (!loadingMore.value && _haveItens) {
+    if (!loadingMore.value && _paginationManager.hasMoreItems) {
       loadingMore.value = true;
       //validar se há próxima página
       final state = value.characterReturnEntity!;
       if (state.info.next == null) {
         loadingMore.value = false;
-        _haveItens = false;
+        _paginationManager.noMoreItems();
         return;
       }
       //buscar a próxima página
       final result = await _getApiCharacteresUsecase(
         CharactersSearchInput(
-          page: _page,
+          page: _paginationManager.page,
           search: search,
           filterCharacter: filter,
         ),
@@ -79,8 +70,7 @@ class CharactersController extends ValueNotifier<CharactersState> {
           );
           value = SuccessCharactersState(entity);
           loadingMore.value = false;
-          _haveItens = true;
-          _page++;
+          _paginationManager.nextPage();
         },
         (error) {
           value = ErrorCharactersState(error);
@@ -97,11 +87,5 @@ class CharactersController extends ValueNotifier<CharactersState> {
   Future<void> onFilter(FilterCharacter value) async {
     filter = value;
     loadData();
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
   }
 }

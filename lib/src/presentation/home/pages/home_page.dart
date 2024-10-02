@@ -19,16 +19,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _controller = injector<CharactersController>();
+  late ScrollController scrollController;
 
   @override
   void initState() {
-    super.initState();
+    scrollController = ScrollController();
     _controller.loadData();
+    super.initState();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -98,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       ItensCharactersGridWidget(
                         items: items,
-                        scrollController: _controller.scrollController,
+                        scrollController: scrollController,
                         loadMore: _controller.loadMoreItens,
                       ),
                       LoadingMoreItemsWidget(

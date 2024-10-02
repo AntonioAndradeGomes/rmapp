@@ -1,3 +1,5 @@
+import 'package:rmapp/src/presentation/home/controllers/characters/pagination_manager.dart';
+
 import './dependencies_injector_imports.dart';
 
 final injector = InjectorImp();
@@ -81,8 +83,12 @@ Future<void> initializeDependencies() async {
       ),
     )
     ..registerFactory(
+      () => PaginationManager(),
+    )
+    ..registerFactory(
       () => CharactersController(
         getApiCharacteresUsecase: injector(),
+        paginationManager: injector(),
       ),
     )
     ..registerFactory(
@@ -91,7 +97,10 @@ Future<void> initializeDependencies() async {
       ),
     )
     ..registerFactory(
-      () => FavoritesController(),
+      () => FavoritesController(
+        getFavoritesCharacteresUseCase: injector(),
+        removeCharactereFavoriteUsecase: injector(),
+      ),
     )
     ..registerFactory(
       () => FilterController(),

@@ -30,6 +30,7 @@ class EpisodesController extends ValueNotifier<EpisodesState> {
     );
   }
 
+  //remover isso depois quebra do single responsability
   Future<void> saveData({required CharacterEntity entity}) async {
     final result = await _saveCharacterUsecase(entity);
     result.fold(
