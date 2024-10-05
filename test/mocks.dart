@@ -77,6 +77,21 @@ const characterListMock = <CharacterModel>[
   ),
 ];
 
+const characterListMock2 = <CharacterModel>[
+  CharacterModel(
+    id: 1,
+    name: 'Rick Sanchez',
+    status: 'Alive',
+    species: 'Human',
+    type: '',
+    gender: 'Male',
+    locationName: 'Citadel of Ricks',
+    episodes:
+        '[https://rickandmortyapi.com/api/episode/1, https://rickandmortyapi.com/api/episode/2]',
+    image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+  ),
+];
+
 const resultCharacterReturnModel = CharacterReturnModel(
   info: InfoModel(
     count: 826,
@@ -87,6 +102,35 @@ const resultCharacterReturnModel = CharacterReturnModel(
   results: characterListMock,
 );
 
+const resultCharacterReturnModel2 = CharacterReturnModel(
+  info: InfoModel(
+    count: 826,
+    pages: 42,
+    next: 'https://rickandmortyapi.com/api/character?page=3',
+    prev: 'https://rickandmortyapi.com/api/character?page=2',
+  ),
+  results: characterListMock,
+);
+
+const resultCharacterReturnModel3 = CharacterReturnModel(
+  info: InfoModel(
+    count: 826,
+    pages: 42,
+    next: null,
+    prev: null,
+  ),
+  results: characterListMock,
+);
+
+const resultCharacterReturnModel4 = CharacterReturnModel(
+  info: InfoModel(
+    count: 826,
+    pages: 42,
+    next: 'https://rickandmortyapi.com/api/character?page=2',
+    prev: null,
+  ),
+  results: characterListMock2,
+);
 const mockEpisodeList = [
   EpisodeModel(
     id: 1,
