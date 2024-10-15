@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rmapp/src/common/widgets/error_widget.dart';
-import 'package:rmapp/src/presentation/character_detail/controllers/episodes_state.dart';
+import 'package:rmapp/src/presentation/character_detail/controllers/episode/episodes_state.dart';
 import 'package:rmapp/src/presentation/character_detail/widgets/episodes_list_widget.dart';
 
 class EpisodesSliverWidget extends StatelessWidget {

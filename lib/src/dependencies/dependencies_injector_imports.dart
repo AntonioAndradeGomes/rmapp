@@ -14,8 +14,9 @@ export 'package:rmapp/src/domain/episode/usecases/get_episodes_from_urls_usecase
 export 'package:rmapp/src/domain/character/usecases/get_favorites_characteres_usecase.dart';
 export 'package:rmapp/src/domain/character/usecases/remove_character_favorite_usecase.dart';
 export 'package:rmapp/src/domain/character/usecases/save_character_usecase.dart';
-export 'package:rmapp/src/presentation/character_detail/controllers/episodes_controller.dart';
+export 'package:rmapp/src/presentation/character_detail/controllers/episode/episodes_controller.dart';
 export 'package:rmapp/src/presentation/episode_detail/controllers/list_characteres_controller.dart';
 export 'package:rmapp/src/presentation/favorites/controllers/favorites_controller.dart';
 export 'package:rmapp/src/presentation/home/controllers/characters/characters_controller.dart';
 export 'package:rmapp/src/presentation/home/controllers/filter/filter_controller.dart';
+export 'package:rmapp/src/presentation/home/controllers/characters/pagination_manager.dart';

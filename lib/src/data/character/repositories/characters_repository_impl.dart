@@ -25,8 +25,9 @@ class CharactersRepositoryImpl implements CharactersRepository {
     CharactersSearchInput search,
   ) async {
     try {
-      final characterReturnModel = await _datasource
-          .getCharacters(CharactersSearchInputModel.fromEntity(search));
+      final characterReturnModel = await _datasource.getCharacters(
+        CharactersSearchInputModel.fromEntity(search),
+      );
       return characterReturnModel.toSuccess();
     } catch (e) {
       return CustomException(
@@ -87,8 +88,7 @@ class CharactersRepositoryImpl implements CharactersRepository {
           );
           return NoParams().toSuccess();
         }
-        log(' o personagem já está entre os favoritos com dados iguais');
-        // Se o personagem já está entre os favoritos com dados iguais
+        log('O personagem já está entre os favoritos com dados iguais');
         return const CustomException(
           customMessage: 'Character is already a favorite',
           code: '1555',

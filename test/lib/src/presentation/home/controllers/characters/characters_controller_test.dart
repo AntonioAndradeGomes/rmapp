@@ -7,7 +7,6 @@ import 'package:rmapp/src/domain/character/entities/characters_search_input.dart
 import 'package:rmapp/src/domain/character/entities/enums.dart';
 import 'package:rmapp/src/domain/character/entities/filter_character_entity.dart';
 import 'package:rmapp/src/presentation/home/controllers/characters/characters_state.dart';
-import 'package:rmapp/src/presentation/home/controllers/characters/pagination_manager.dart';
 
 import '../../../../../../mocks.dart';
 

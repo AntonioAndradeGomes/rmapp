@@ -1,4 +1,4 @@
-import 'package:rmapp/src/presentation/home/controllers/characters/pagination_manager.dart';
+import 'package:rmapp/src/presentation/character_detail/controllers/character/save_character_controller.dart';
 
 import './dependencies_injector_imports.dart';
 
@@ -79,7 +79,6 @@ Future<void> initializeDependencies() async {
     ..registerFactory(
       () => EpisodesController(
         getEpisodesFromUrlsUsecase: injector(),
-        saveCharacterUseCase: injector(),
       ),
     )
     ..registerFactory(
@@ -100,6 +99,11 @@ Future<void> initializeDependencies() async {
       () => FavoritesController(
         getFavoritesCharacteresUseCase: injector(),
         removeCharactereFavoriteUsecase: injector(),
+      ),
+    )
+    ..registerFactory(
+      () => SaveCharacterController(
+        saveCharacterUsecase: injector(),
       ),
     )
     ..registerFactory(
