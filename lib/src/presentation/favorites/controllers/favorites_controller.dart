@@ -32,6 +32,9 @@ class FavoritesController extends ValueNotifier<FavoritesState> {
   }
 
   Future<void> removeCharacter(CharacterEntity entity) async {
+    if (value is! SuccessFavoritesState) {
+      return;
+    }
     final result = await _removeCharactereFavoriteUsecase(entity);
 
     result.fold(
