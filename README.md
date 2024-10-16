@@ -21,8 +21,8 @@ This is a Flutter application about Rick and Morty characters built in order to 
   
 ## features to be implemented
 
-* [ ] Test the application functions
-* [ ] Adjust solid principle breaks
+* [x] Test the application functions
+* [x] Adjust solid principle breaks
 * [x] Adjustment on character details screen, page view between details and episode list
 * [x] Added filtering to the main screen character list
 
